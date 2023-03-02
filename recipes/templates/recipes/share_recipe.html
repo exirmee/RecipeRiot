@@ -1,0 +1,29 @@
+{% block share_recipe %}
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Share Recipe
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title dark-text fs-5" id="exampleModalLabel">share on social media</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <a
+                    href="mailto:?subject=Here's the recipe for Gheyme {{recipe.name}} from RecipeRiot &body=Here's recipe of {{recipe.name}} from RecipeRiot  %0D<a href='https://{{request.get_host}}{{request.path}}'></a>%0D ">
+                    <button type="button" class="btn btn-secondary">Share by Email</button>
+                </a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary">Copy Link</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

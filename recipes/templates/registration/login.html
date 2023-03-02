@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<!-- Custom styles for this template -->
+<link href="{% static 'css/profile.css' %}"" rel=" stylesheet">
+<main class="form-signin dark-card">
+
+  <form method="post">
+    <a href="#">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z">
+        </path>
+      </svg>
+    </a>
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    {% csrf_token %}
+    <div class="form-floating">
+      <input type="text" class="form-control dark-input" placeholder="username" name="{{form.username.name}}"
+        id="{{form.username.id_for_label}}">
+      <label for="floatingInput">User Name</label>
+    </div>
+
+    <div class="form-floating pt-2">
+      <input type="password" class="form-control dark-input" placeholder="name@example.com" name="{{form.password.name}}"
+        id="{{form.password.id_for_label}}">
+      <label for="floatingInput">password</label>
+    </div>
+    
+    <button type="submit" class=" w-100 btn btn-lg btn-primary">Log in</button>
+    <p class="mt-2 mb-3">If you don't have an account, <a href="{% url 'signup' %}">Registe</a> here!</p>
+    <span class="d-flex" style="justify-content: center;">or</span>
+    <button type="button" class="w-100 btn btn-lg btn-outline-danger">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google"
+        viewBox="0 0 16 16">
+        <path
+          d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z">
+        </path>
+      </svg>
+      Connect with Google
+    </button>
+  </form>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+/*set  sidebar item in center  */
+.sidebar-items{
+  justify-content: space-around;
+}
+/*change animation smooth nav-item color by mouse hover */
+.nav-item:hover{
+  background-color: var(--light-text);
+  color: var(--dark-text);
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.sidebar{
+  display: flex;
+  align-items: center;
+}

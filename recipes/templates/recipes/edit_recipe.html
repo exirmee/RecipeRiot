@@ -1,0 +1,409 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="sub-content container d-flex my-3" style="overflow:auto;">
+  <div class="container my-2">
+    <div class="image-container mt-4">
+      <img class="recipe-cover w-100 d-block mx-auto mb-4 img-fluid rounded-lg-3" id="recipe-cover"
+        src="{{recipe.image.url}}" alt="" />
+      <input type="file" class="image-button btn btn-warning" accept="image/*" class="recipe-img form-control"
+        id="image" value="{{recipe.image}}">
+
+    </div>
+    <div class="recipe-name pb-2 dark-card p-3">
+      <div class="row">
+        <div class="col-10">
+          <p class="display-3 pb-3">Recipe's Name:</p>
+        </div>
+        <div class="col-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" name="privacy" id="privacy" type="checkbox" {% if recipe.privacy %}checked{% endif %} value="{{recipe.privacy}}">
+            <label class="form-check-label" for="privacy">Is this a private recipe?</label>
+          </div>
+        </div>
+        <input id="name" class=" dark-input text-white form-control form-control-lg mb-4 p-3" name="name" type="text"
+          placeholder="name" value="{{ recipe.name }}" enabled="false">
+      </div>
+    </div>
+    <div class="categories row pb-0 align-items-start mt-5">
+      <p class="display-3 pb-3">Recipe Categories:</p>
+
+      {% for parent in parent_categories %}
+      <div class="col-sm-12 col-md-4 col-lg-4">
+        <div class="parent col card dark-card text-white p-4 h-100 ">
+          <h3 class="card-title h3 text-uppercase font-weight-light">{{parent.name}}</h3>
+          {% for cat in all_cats %}
+          {% if cat.parent_categories.name == parent.name %}
+          {% if cat in categories %}
+          <div class="form-check form-check-inline">
+            <label for="{{cat.name}}">{{cat.name}}</label>
+            <input type="checkbox" class="form-check-input" placeholder="form-check-inline" name="{{cat.name}}"
+              id="{{cat.name}}" value="{{cat.name}}" checked>
+
+          </div>
+          {% else %}
+          <div class="form-check form-check-inline">
+            <label for="{{cat.name}}">{{cat.name}}</label>
+            <input type="checkbox" class="form-check-input" placeholder="form-check-inline" name="{{cat.name}}"
+              id="{{cat.name}}" value="{{cat.name}}">
+          </div>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+    <div class="features row py-5">
+      <p class="display-3 pb-3">Recipe's Features:</p>
+      <div class=" col card dark-card text-white m-3 p-4 h-100 rounded ">
+        <section class="overflow-hidden flex-md-row shadow-sm d-flex align-items-start d-inline p-2 ">
+          <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
+            <use xlink:href="#cpu-fill"></use>
+          </svg>
+          <div>
+            <h4 class="card-title h3 text-uppercase font-weight-light">Serves:</h4>
+            <input type="number" name="serves" id="serves" class="dark-input" value="{{recipe.serves }}" min="1"
+              max="20"> Person
+
+            <p>Paragraph of text beneath the heading to explain the heading.</p>
+          </div>
+        </section>
+      </div>
+      <div class="col card dark-card text-white m-3 p-4 h-100 rounded  ">
+        <section class=" overflow-hidden flex-md-row shadow-sm d-flex align-items-start d-inline p-2 ">
+          <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
+            <use xlink:href="#cpu-fill"></use>
+          </svg>
+          <div>
+            <h4 class="card-title h3 text-uppercase font-weight-lightcard-title h3 text-uppercase font-weight-light">
+              Difficulty: </h4>
+
+            <label for="difficultySelect">Select difficulty level:</label>
+            <select class="form-control dark-input light-text" name="difficulty" id="difficulty" id="difficulty"
+              value="{{recipe.difficulty}}">
+              <option value="1">Easy</option>
+              <option value="2" selected>Medium</option>
+              <option value="3">Hard</option>
+            </select>
+
+            <p>Paragraph of text beneath the heading to explain the heading.</p>
+          </div>
+        </section>
+      </div>
+      <div class="col card dark-card text-white m-3 p-4 h-100 rounded  ">
+        <section class="overflow-hidden flex-md-row shadow-sm d-flex align-items-start d-inline p-2 ">
+          <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
+            <use xlink:href="#cpu-fill"></use>
+          </svg>
+          <div>
+            <h4 class=" card-title h3 text-uppercase font-weight-light">Prepare Time: </h4>
+            <input type="number" name="timetoprepare" id="timetoprepare" class="dark-input" min="1" max="1000"
+              value="{{recipe.timetoprepare }}">
+
+
+            Minutes
+
+            <p>Minutes of text beneath the heading to explain heading heading.heading heading.</p>
+          </div>
+        </section>
+      </div>
+
+    </div>
+    <div class="intro row pb-2 dark-card text-white  p-3">
+      <p class="display-3 pb-3 font-weight-light">Recipe Introduction:</p>
+      <textarea id="intro" class=" dark-input text-white form-control form-control-lg mb-4 p-3"
+        aria-label="Recipe Introduction">{{ recipe.intro }}</textarea>
+    </div>
+    <div class="ingredients  pb-2 p-3 mt-5">
+      <h4 class="display-4 pb-3"> Ingridiants for {{ recipe.name }}</h4>
+      <div class="row ing-title dark-card pt-4 pb-4 ">
+        <div class="col-5">
+          <p class="   ">ingredient</p>
+        </div>
+        <div class="col-3">
+          <p class=" ">value</p>
+        </div>
+        <div class="col-2">
+          <p class="  ">unit</p>
+        </div>
+        <div class="col-2">
+          <p class="  ">action</p>
+        </div>
+
+      </div>
+
+      <div class=" ing-content" id="ing-row">
+        {% for ing in ingredients %}
+        {% include 'recipes/partials/ingredient.html' %}
+        {% endfor %}
+      </div>
+
+      <div class=" ing-form dark-card  pb-4">
+        <form hx-post="/add-ing/" hx-target="#ing-row" hx-swap="beforeend">
+          <div class="row " style="align-items: flex-end;">
+            {% csrf_token %}
+            <div class=" col-5  ">
+              <input name="recipe_id" value="{{recipe.id}}" class="invisible hidden">
+              <input type="text" name="ingredient" class="name p-3 w-100 dark-input  text-white "
+                placeholder="ingredient">
+            </div>
+            <div class=" col-3    ">
+              <input type="number" name="value" class="value p-3 w-100 dark-input   text-white"
+                placeholder="value">
+            </div>
+            <div class=" col-2   ">
+              <select class="unit p-3 w-100 dark-input   text-white" aria-label="Select Unit" name="unit">
+                <option selected>Select Unit</option>
+                {% for unit in units %}
+                <option value="{{unit.id}}">{{unit}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class=" col-2   ">
+              <button class="p-3 w-100 btn btn-primary">Add </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="steps row pb-0 mt-5">
+      <h4 class="display-4 pb-3"> Instructions for {{ recipe.name }}</h4>
+      <div class="row ins-title dark-card pt-4 pb-2 ">
+        <div class="col-10">
+          <p class=" text-xs font-medium  uppercase ">Instructions</p>
+        </div>
+        <div class="col-2">
+          <p class=" text-xs font-medium  uppercase ">#</p>
+        </div>
+      </div>
+      <div class=" ins-content" id="ins-row">
+        {% for ins in instructions %}
+        {% include 'recipes/partials/instruction.html' %}
+        {% endfor %}
+      </div>
+      <div class=" ins-form dark-card pt-4 pb-4 ">
+        <form hx-post="/add-ins/" hx-target="#ins-row" hx-swap="beforeend">
+          <div class=" row dark-card " style="align-items: flex-end;">
+            {% csrf_token %}
+            <input name="recipe_id" value="{{recipe.id}}" class="invisible hidden">
+            <div class=" col-10   rounded ">
+              <input type="text" name="instruction" class="instruction p-3 w-100 dark-input rounded  text-white"
+                placeholder="instruction">
+            </div>
+            <div class=" col-2  rounded ">
+              <button class="p-3 rounded  w-100 text-white btn btn-primary">Add </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="outro row g-0 mt-5  overflow-hidden flex-md-row  position-relative">
+      <p class="display-3 pb-3 font-weight-light">Final Explanations and serving tips:</p>
+      <textarea id="outro" class="dark-input text-white form-control form-control-lg mb-4 p-3"
+        aria-label="Recipe Explanations" type="text" enabled="false">{{ recipe.outro }}</textarea>
+    </div>
+    <div class="save-form">
+      <form hx-post="/save/{{ recipe.id }}/" hx-target="#msg" hx-fail-target="#msg" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input class="d-none" id="imageB" type="file" name="image" />
+        <input class="d-none" name="privacy" id="privacyB" {% if recipe.privacy %}checked{% endif %}
+          value="{{recipe.privacy}}" />
+        <input class="d-none" name="name" id="nameB" value="{{recipe.name}}" />
+        <input class="d-none" name="serves" id="servesB" value="{{recipe.serves}}" />
+        <input class="d-none" name="difficulty" id="difficultyB" value="{{recipe.difficulty}}" />
+        <input class="d-none" name="timetoprepare" id="timetoprepareB" value="{{recipe.timetoprepare}}">
+        <textarea class="d-none" name="intro" id="introB">{{recipe.intro}}</textarea>
+        <textarea class="d-none" name="outro" id="outroB">{{recipe.outro}}</textarea>
+        <textarea class="d-none dark-input" name="cat" id="cat"></textarea>
+        <button type="submit" class="btn btn-primary btn-lg px-4 gap-3 w-100">Save</button>
+        <p id="msg"></p>
+      </form>
+    </div>
+   
+  </div>
+</div>
+
+<script>
+  const image = document.querySelector('#image');
+  const imageB = document.querySelector('#imageB');
+  const privacy = document.querySelector('#privacy');
+  const privacyB = document.querySelector('#privacyB');
+  const name = document.querySelector('#name');
+  const nameB = document.querySelector('#nameB');
+  const serves = document.querySelector('#serves');
+  const servesB = document.querySelector('#servesB');
+  const difficulty = document.querySelector('#difficulty');
+  const difficultyB = document.querySelector('#difficultyB');
+  const timetoprepare = document.querySelector('#timetoprepare');
+  const timetoprepareB = document.querySelector('#timetoprepareB');
+  const intro = document.querySelector('#intro');
+  const introB = document.querySelector('#introB');
+  const outro = document.querySelector('#outro');
+  const outroB = document.querySelector('#outroB');
+
+  //match all fields on change in page with form which is going to sent to save_recipe view
+  image.addEventListener('change', function () {
+    imageB.files = this.files;
+    console.log(image.files);
+    console.log('imageB::::', imageB.files);
+  });
+
+  privacy.addEventListener('input', function () {
+    privacyB.checked = privacy.checked;
+    privacyB.value = privacyB.checked;
+  });
+
+  name.addEventListener('input', function () {
+    nameB.value = name.value;
+  });
+
+  serves.addEventListener('input', function () {
+    servesB.value = serves.value;
+  });
+  difficulty.addEventListener('input', function () {
+    difficultyB.value = difficulty.value;
+  });
+  timetoprepare.addEventListener('input', function () {
+    timetoprepareB.value = timetoprepare.value;
+  });
+  intro.addEventListener('input', function () {
+    introB.value = intro.value;
+  });
+  outro.addEventListener('input', function () {
+    outroB.value = outro.value;
+  });
+
+
+  //check all categories checkbox
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  let checkedValues = [];
+
+  for (let i = 0; i < checkboxes.length; i++) {
+    const checkbox = checkboxes[i];
+
+    if (checkbox.checked) {
+      checkedValues.push(checkbox.value);
+    }
+
+    checkbox.addEventListener('change', function () {
+      if (checkbox.checked) {
+        checkedValues.push(checkbox.value);
+      } else {
+        const index = checkedValues.indexOf(checkbox.value);
+        if (index > -1) {
+          checkedValues.splice(index, 1);
+        }
+      }
+      document.getElementById('cat').innerHTML = JSON.stringify(checkedValues);
+      console.log(privacy.checked);
+      console.log(privacyB.checked);
+
+    });
+  }
+
+
+  //chane recipe image when a image with brows buttun is selected
+  const imageInput = image;
+  const targetImage = document.getElementById("recipe-cover");
+
+  imageInput.addEventListener("change", function () {
+    const file = imageInput.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      targetImage.src = reader.result;
+    };
+  });
+</script>
+
+<style>
+  /* make toggle button styles  */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked+.slider {
+    background-color: #2196F3;
+  }
+
+  input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  /* end of toggle button styles */
+
+  /* htmx swapping styles */
+  .htmx-swapping {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+  }
+
+  .image-container {
+    position: relative;
+  }
+
+  /* Make the image responsive */
+  .image-container img {
+    width: 100%;
+    height: auto;
+  }
+
+  .image-container .image-button {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    background-color: #0f0f0f;
+    color: white;
+  }
+</style>
+{%endblock%}

@@ -1,0 +1,28 @@
+
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{ profile.image.url }}" class="img-fluid" alt="profile image">
+            </div>
+            <div class="col-md-8">
+                <h2>{{ profile.user.username }}'s Profile</h2>
+                <p><strong>Bio:</strong> {{ profile.bio }}</p>
+                <p><strong>Location:</strong> {{ profile.location }}</p>
+                <p><strong>Birthdate:</strong> {{ profile.birth_date }}</p>
+                <p><strong>Dietary Restrictions:</strong> {{ profile.dietary_restrictions }}</p>
+                <p><strong>Favorite Cuisines:</strong> {{ profile.favorite_cuisines }}</p>
+                <p><strong>Favorite Ingredients:</strong> {{ profile.favorite_ingredients }}</p>
+                <p><strong>Followers:</strong> {{ profile.followers.count }}</p>
+                <p><strong>Following:</strong> {{ profile.following_users.count }}</p>
+                <p><strong>Saved Recipes:</strong> {{ profile.saved_recipes.count }}</p>
+            </div>
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" type="submit">Save</button>
+          </form>
+    </div>
+{% endblock %}

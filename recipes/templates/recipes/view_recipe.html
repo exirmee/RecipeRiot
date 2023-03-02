@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="sub-content d-block container my-5" style="overflow:auto;">
+  <!-- end of recipe options -->
+  <div class="recipe-options my-2 ">
+    <div class="row pb-0 align-items-center ">
+      <div class="px-4  my-5 text-center">
+        <img class="recipe-cover d-block mx-auto mb-4 img-fluid rounded-lg-3" src="{{recipe.image.url}}" alt="" />
+        <h1>
+          {{ recipe.name }}
+        </h1>
+        <a>
+          {% for category in categories %}
+          <a href="../../cats/{{ category.pk }}/" class="btn btn-outline-primary btn-sm ">
+            <li>{{ category.name }}</li>
+          </a>
+          {% endfor %}
+        </a>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">{{ recipe.intro|safe }}</p>
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            {% if user.is_authenticated and recipe.author == user and not user.is_anonymous %}
+            <a href="{% url 'edit_recipe' recipe.pk %}">
+              <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Edit</button>
+            </a>
+            {% elif user.is_authenticated and not user.is_anonymous %}
+            <form action="{% url 'duplicate_recipe' recipe.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">Duplicate</button>
+            </form>
+            {% endif %}
+            <!-- load share trigger modal  and bootstrap ja fo that-->
+            {% include "recipes/share_recipe.html" %}
+            <script src="{% static 'script/bootstrap.min.js' %}"></script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of recipe options -->
+
+  <div class="row">
+    <div class="col mt-5">
+      <h4> Ingridiants for {{ recipe.name }}</h4>
+      <table class="table dark-card light-text ">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Value</th>
+            <th scope="col">Unit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ing in ingredients %}
+          <tr>
+            <th scope="row">
+              <span>No. {{ forloop.counter }}</span>
+            </th>
+            <td>{{ ing }}</td>
+            <td>{{ ing.value|floatformat:2 }}</td>
+            <td>{{ ing.unit }}</td>
+          </tr>
+          {% endfor %}
+      </table>
+      <div class="row futures row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
+
+        <div class="col ">
+          <section class="border rounded overflow-hidden flex-md-row shadow-sm d-flex align-items-start d-inline p-2 ">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
+              <use xlink:href="#cpu-fill"></use>
+            </svg>
+            <div>
+              <h4 class=" mb-0">Serves: {{ recipe.serves }} Person</h4>
+              <p>Paragraph of text beneath the heading to explain the heading.</p>
+            </div>
+          </section>
+        </div>
+
+        <div class="col ">
+          <section class="border rounded overflow-hidden flex-md-row shadow-sm d-flex align-items-start d-inline p-2 ">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
+              <use xlink:href="#cpu-fill"></use>
+            </svg>
+            <div>
+              <h4 class=" mb-0">Difficulty: {{ recipe.difficulty }} of 3</h4>
+              <p>Paragraph of text beneath the heading to explain the heading.</p>
+            </div>
+          </section>
+        </div>
+        <div class="col ">
+          <section class="border rounded overflow-hidden flex-md-row shadow-sm d-flex align-items-start d-inline p-2 ">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
+              <use xlink:href="#cpu-fill"></use>
+            </svg>
+            <div>
+              <h4 class=" mb-0">Time: {{ recipe.timetoprepare }} m </h4>
+              <p>Minutes of text beneath the heading to explain the heading.</p>
+            </div>
+          </section>
+        </div>
+        <div class="col ">
+          <section class="border rounded overflow-hidden flex-md-row shadow-sm d-flex align-items-start d-inline p-2 ">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
+              <use xlink:href="#cpu-fill"></use>
+            </svg>
+            <div>
+              <h4 class=" mb-0">kalorie: {{ recipe.timetoprepare }} K </h4>
+              <p>Minutes of text beneath the heading to explain the heading.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="steps row g-0 border rounded overflow-hidden flex-md-row shadow-sm position-relative p-4">
+    <h2 class="pb-1 pt-3 border-bottom">Recipe Steps:</h2>
+
+    {% for step in instructions %}
+    <div class="step row">
+      <!-- code to iterate across each copy/instance of a book -->
+      <div class="col-1">
+        <span class="mb-0">No. {{ forloop.counter }}</span>
+      </div>
+      <div class="col-11">
+        <p class="mb-0">{{ step.instruction }}</p>
+      </div>
+    </div>
+    <div class="row divider ">-</div>
+    {% endfor %}
+  </div>
+  <div class="outro row g-0   overflow-hidden flex-md-row  position-relative p-4">
+    <h2>Final Explanations and serving tips</h2>
+
+    <p>{{ recipe.outro|safe }}</p>
+  </div>
+
+
+</div>
+</div>
+<script>
+
+
+</script>
+{%endblock%}

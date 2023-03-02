@@ -1,0 +1,15 @@
+
+<article class="row">
+
+  <div class="col-10 py-2">
+    <p class="white-text  ">{{ins.instruction}}</p>
+  </div>
+
+  <div class="col-2  py-2">
+    <form hx-target="closest article" hx-swap="outerHTML swap:1s" hx-post="/delete_ins/{{ ins.id }}/">
+      {% csrf_token %}
+    <button  class="p-2 btn btn-danger rounded text-white bg-red float-right"  >X</button>
+    </form>
+  </div>
+  <hr class="hr hr-blurry pb-1" />
+</article>

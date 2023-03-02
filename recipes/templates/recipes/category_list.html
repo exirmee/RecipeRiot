@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+
+
+<div class="sub-content d-block container my-5" style="overflow:auto;">
+    <div class="d-block mt-3">
+        {% include 'search_form.html' %}
+        <div class="row ">
+            {% for parent in parent_category %}
+            <div class="parent my-2 px-5">
+                <h3>
+                    {{ parent.name }}
+                </h3>
+                {% for child in categories %}
+                {% if child.parent_categories == parent %}
+                <a href=" {{ child.pk }}" class="btn btn-outline-primary btn-sm cat_item">
+                    {{ child }}
+                </a>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+        </div>
+<style>
+
+
+
+.cat_item{
+
+    padding: 10px;
+    font-weight: 600;
+    font-size: x-large;
+}
+</style>
+
+    </div>
+</div>
+
+{% endblock %}

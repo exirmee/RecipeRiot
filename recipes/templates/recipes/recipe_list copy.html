@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="container" style="overflow:auto;">
+  <div class="d-block">
+    {% include 'search_form.html' %}
+    <div class="container row my-2 rounded-3 border " style='box-shadow: 5px 5px 5px rgb(68 68 68 / 18%); '>
+      <div class="col-8 pb-0">
+
+        <div class="px-4 py-4 my-5 ">
+
+
+
+          <div class="col-lg-6">
+            <h1>
+              <small>We Have </small>
+              {{ recipe_count }}
+              <small> Recipes</small>
+            </h1>
+            <p class="lead mb-4">Quickly find best Recipe that is for a good and well tasted meal the world’s most
+              popular
+              recipe app, featuring everything you need for you to prepare a food that everyone loves.</p>
+            {% if user.is_authenticated %}
+            <span> welcome <strong><a href="{% url 'home' %}">{{ user.username }}</a> </strong> </span>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+              <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">Signout</button>
+              </form>
+            </div>
+
+            {% else %}
+            <div class="d-grid gap-2 d-sm-flex ">
+
+              <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">Signup</button>
+              </form>
+              <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-secondary btn-lg px-4">Login</button>
+              </form>
+
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-4 " style="place-self: center;">
+        <img src="{% static '../media/logo.png' %}" class="img-fluid" alt="logo">
+      </div>
+    </div>
+    <div class="row pt-5">
+      {% for recipe in recipe_list|dictsort:"name" %}
+      <div class="col recipe-card col-sm-12 col-md-6 col-lg-4 .col-xl-3">
+        <section class="card dark-card">
+          <div class="card-header"><strong>chef: @<a href="#">{{ recipe.author.username }}</a></strong></div>
+          <img class="card-img-top img-fluid " src="{{recipe.image.url}}" alt="{{ recipe.image.name }}" width="300"
+            height="100" />
+          <div class="card-body">
+            <h4 class="card-title">{{ recipe.name|slice:':60' }}</h4>
+            <p class="card-text">
+            <div class="d-inline py-2 ">Serves: {{ recipe.serves }}</div>
+            <div class="d-inline py-2 ">Difficulty: {{ recipe.difficulty }}</div>
+            <div class="d-inline py-2 ">Time: {{ recipe.timetoprepare }}</div>
+            <div class="intro py-3 ">{{ recipe.intro|slice:':150' }}...</div>
+            <a href="{% url 'view_recipe' recipe.id %}"><button class="btn btn-primary light-text">lets cook
+                it!</button></a>
+          </div>
+          <div class="card-footer">
+            <form data-hx-post="{% url 'add_favorite' recipe.id %}"   hx-target="#add-favorite-btn{{recipe.id}}">
+              {% csrf_token %}
+              {% if user.is_authenticated %}
+              <button type="submit" id="add-favorite-btn{{recipe.id}}" class="btn btn-primary">
+                {% if recipe.id in favorites %}♥{% else %}♡{% endif %}
+              </button>
+      
+            </form>
+            {% endif %}
+          </div>
+        </section>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row">
+      <nav aria-label="Page navigation ">
+        <ul class="pagination pt-3 justify-content-center">
+          <li class="page-item ">
+            {% if recipe_list.has_previous %}
+            <a class="page-link" href="?page={{ recipe_list.previous_page_number }}" tabindex="-1">Previous</a>
+            {% endif %}
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Page {{ recipe_list.number }} of
+              {{recipe_list.paginator.num_pages }}</a>
+          </li>
+          <li class="page-item">
+            {% if recipe_list.has_next %}
+            <a class="page-link" href="?page={{ recipe_list.next_page_number }}">Next</a>
+            {% endif %}
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+  {% endblock %}
