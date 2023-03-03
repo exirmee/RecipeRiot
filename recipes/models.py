@@ -72,7 +72,6 @@ class Recipe(models.Model):
     intro = models.TextField(help_text='an introduction for the recipe',null=True,blank=True)
     outro = models.TextField(help_text='add some notes for the recipe',null=True,blank=True)
     image = ResizedImageField(size=[850, 300], quality=80,force_format='WebP',crop=['middle', 'center'], upload_to='recipe_images/',default="default/default-recipe.jpg",blank=True, null=True,help_text='choose an image for the recipe')
-    #reviews = models.ManyToManyField(Profile, through='Review', related_name='reviews', blank=True)
     cat=models.ManyToManyField(RecipeCats,blank=True,help_text='Select categories for recipe (hold ctrl to select more than one recipe)')
     ingredients = models.ManyToManyField(RecipeIngredients,blank=True,help_text='Select ingredients for recipe (hold ctrl to select more than one recipe)')
     instructions = models.ManyToManyField(RecipeInstructions,blank=True,help_text='Select instructions for recipe (hold ctrl to select more than one recipe)')
@@ -95,3 +94,22 @@ class Favorite(models.Model):
     
     def __str__(self):
         return f"{self.user}'s favorite: {self.recipe}"
+
+# This class represents the ratings and reviews for a recipe, where every user can rate and review each recipe.
+class RecipeReview(models.Model):
+    # ForeignKey to link the recipe to the rating
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ratings')
+    # ForeignKey to link the user to the rating
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ratings')
+    # An integer field for the rating, with a validator to restrict it to values between 1 and 5
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    # A text field for the review
+    review = models.TextField()
+    image = ResizedImageField(size=[1080, 720], quality=80,force_format='WebP',crop=['middle', 'center'], upload_to='review_images/',blank=True, null=True)
+    # A date field to keep track of when the rating was created
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # A string representation of the model, showing the recipe name and the user who submitted the rating and review
+    def __str__(self):
+        return f'{self.recipe.name} - {self.user.username}'

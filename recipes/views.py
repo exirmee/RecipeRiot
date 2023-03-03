@@ -1,6 +1,6 @@
 import ast,os
 from django.http import HttpResponse, HttpResponseBadRequest
-from .models import Recipe,RecipeCats,ParentCats,RecipeIngredients,Units,RecipeInstructions,Favorite
+from .models import Recipe,RecipeCats,ParentCats,RecipeIngredients,Units,RecipeInstructions,Favorite,RecipeReview
 from django.shortcuts import render, get_object_or_404,redirect
 from django.template import loader
 from django.core.paginator import Paginator
@@ -191,7 +191,8 @@ def view_recipe(request,pk):
         ingredients=recipe.ingredients.all()
         instructions=recipe.instructions.all()
         categories = recipe.cat.all()
-        context = {'recipe': recipe,'categories': categories,'instructions':instructions,'ingredients':ingredients}
+        reviews=RecipeReview.objects.filter(recipe=recipe)
+        context = {'recipe': recipe,'categories': categories,'instructions':instructions,'ingredients':ingredients,'reviews':reviews}
         return render(request, 'recipes/view_recipe.html', context)
 
 
@@ -226,11 +227,11 @@ def save_recipe(request, pk):
             recipe.cat.set(categories)
             recipe.status = True
             recipe.save()
-            return HttpResponse("Recipe saved successfully + categories")
+            return HttpResponse("Recipe saved successfully")
         else:
             recipe.status = True
             recipe.save()
-            return HttpResponse("Recipe saved successfully - categories")
+            return HttpResponse("Recipe saved successfully")
     else:
         return HttpResponse("not allowed")
 
@@ -352,5 +353,24 @@ def add_favorite(request, pk):
         message=("♥")
         favorite=Favorite.objects.create(recipe=recipe, user=user)
         favorite.save()
+    # Add an HX-Trigger header with showAlert as its value
+    # Return the response
+    #return response
     return HttpResponse(message)
 
+@login_required
+def add_review(request, pk):
+    
+    recipe=get_object_or_404(Recipe, pk=pk)
+    user=request.user
+    rating=request.POST.get('rating')
+    review=request.POST.get('review')
+    if request.FILES.get('image'):
+        image = request.FILES['image']
+    else:
+        image=None
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",user,review,recipe,rating)
+    review_obj=RecipeReview.objects.create(recipe=recipe, user=user,rating=rating,review=review,image=image)
+    review_obj.save()
+
+    return HttpResponse(user)

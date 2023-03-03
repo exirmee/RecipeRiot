@@ -3,7 +3,7 @@ from django.urls import path
 
 
 from . import views
-from.views import add_favorite,duplicate_recipe,view_recipe,delete_ing,add_ing,category_list,save_recipe,category_detail,search_view,sign_up_view,home,login_view,edit_recipe,add_recipe,delete_recipe,check_username,delete_ins,add_ins
+from.views import add_review,add_favorite,duplicate_recipe,view_recipe,delete_ing,add_ing,category_list,save_recipe,category_detail,search_view,sign_up_view,home,login_view,edit_recipe,add_recipe,delete_recipe,check_username,delete_ins,add_ins
 
 urlpatterns = [
 
@@ -30,6 +30,7 @@ htmx_urlpatterns = [
     path('delete_ing/<int:pk>/',delete_ing,name="delete_ing"),
     path('delete_ins/<int:pk>/',delete_ins,name="delete_ins"),
     path('add_fav/<int:pk>/',add_favorite,name="add_favorite"),
+    path('add_rev/<int:pk>/',add_review,name="add_review")
 ]
 
 

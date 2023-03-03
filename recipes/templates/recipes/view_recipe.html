@@ -2,7 +2,7 @@
 {% block content %}
 {% load static %}
 
-<div class="sub-content d-block container my-5" style="overflow:auto;">
+<div class="sub-content recipe-content d-block container my-5" style="overflow:auto;">
   <!-- end of recipe options -->
   <div class="recipe-options my-2 ">
     <div class="row pb-0 align-items-center ">
@@ -40,7 +40,6 @@
     </div>
   </div>
   <!-- end of recipe options -->
-
   <div class="row">
     <div class="col mt-5">
       <h4> Ingridiants for {{ recipe.name }}</h4>
@@ -138,11 +137,54 @@
     <p>{{ recipe.outro|safe }}</p>
   </div>
 
-
 </div>
+
+<div class="sub-content recipe-review d-block container my-5" style="overflow:auto;">
+  <div class="add-review row">
+    <h1>Rate this Recipe</h1>
+    <p>
+      Did YOU COOK THIS RECIPE? ADD A NICE REVIEWS
+    </p>
+    <form hx-post="/add_rev/{{ recipe.id }}/" hx-target="#msg" hx-fail-target="#msg" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="rating">
+        <input type="radio" name="rating" id="rating-1" value="1">
+        <input type="radio" name="rating" id="rating-2" value="2">
+        <input type="radio" name="rating" id="rating-3" value="3">
+        <input type="radio" name="rating" id="rating-4" value="4">
+        <input type="radio" name="rating" id="rating-5" value="5">
+        <div class="rating__box">
+          <label for="rating-1" class="rating__star">&starf;</label>
+          <label for="rating-2" class="rating__star">&starf;</label>
+          <label for="rating-3" class="rating__star">&starf;</label>
+          <label for="rating-4" class="rating__star">&starf;</label>
+          <label for="rating-5" class="rating__star">&starf;</label>
+        </div>
+      </div>
+      <div class="textarea-group">
+        <label>
+          <span>Comment : </span>
+          <textarea id="comment-rating" name="review" id="review" placeholder="write your review ..."></textarea>
+        </label>
+      </div>
+      <input class="" id="image" type="file" name="image" />
+      <div class="" id="msg" class="alert alert-info" role="alert">
+
+        <input type="Submit" value="Submit">
+
+    </form>
+  </div>
+
+  <div class="view-reviews ">
+    <h1>
+      REVIEWS
+    </h1>
+    {% for review in reviews %}
+    
+      {% include 'recipes/partials/review.html' %}
+
+    {% endfor %}
+  </div>
 </div>
-<script>
 
-
-</script>
 {%endblock%}

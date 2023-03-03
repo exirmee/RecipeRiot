@@ -69,15 +69,14 @@
           <a href="{% url 'view_recipe' recipe.id %}"><button class="btn btn-primary light-text">lets cook
               it!</button></a>
           <form data-hx-post="{% url 'add_favorite' recipe.id %}" hx-target="#add-favorite-btn{{recipe.id}}"
-            style="float: right;">
+            style="float: right;" >
             {% csrf_token %}
-            {% if user.is_authenticated %}
             <button type="submit" id="add-favorite-btn{{recipe.id}}" class="btn btn-outline-secondary">
               {% if recipe.id in favorites %}♥{% else %}♡{% endif %}
             </button>
 
           </form>
-          {% endif %}
+         
         </div>
       </section>
     </div>

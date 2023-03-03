@@ -100,7 +100,7 @@
       <div class="sidebar-items p-3 d-flex align-items-center">
         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
           <li class="nav-item">
-            <a href="{% url 'index' %}" class="nav-link active py-3" aria-current="page" title="Home"
+            <a href="{% url 'index' %}" class="nav-link py-3  {% if request.path == '/' %}active{% endif %}"  title="Home" 
               data-bs-toggle="tooltip" data-bs-placement="right">
               <svg class="bi" width="24" height="24" role="img" aria-label="Home">
                 <use xlink:href="#home" />
@@ -108,7 +108,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'search' %}" class="nav-link py-3" title="Search"
+            <a href="{% url 'search' %}" class="nav-link py-3 {% if request.path == '/search/' %}active{% endif %}" title="Search" 
               data-bs-toggle="tooltip" data-bs-placement="right">
               <svg class="bi" width="24" height="24" role="img" aria-label="Search">
                 <use xlink:href="#search" />
@@ -117,7 +117,7 @@
           </li>
           <li class="nav-item">
             <form method="post" action="{% url 'add_recipe' %}">
-            <button type="submit" class="nav-link py-3 " aria-current="" title="Add Recipe"
+            <button type="submit" class="nav-link py-3  {% if request.path|slice:6 == '/edit/' %}active{% endif %}" aria-current="" title="Add Recipe"
               data-bs-toggle="tooltip" data-bs-placement="right">
                 {% csrf_token %}
               <svg class="bi" width="24" height="24" role="img" aria-label="add">
@@ -127,7 +127,7 @@
           </form>
           </li>
           <li class="nav-item">
-            <a href="{% url 'category_list' %}" class="nav-link py-3" title="Categories"
+            <a href="{% url 'category_list' %}" class="nav-link py-3  {% if request.path == '/cats/' %}active{% endif %}" title="Categories"
               data-bs-toggle="tooltip" data-bs-placement="right">
               <svg class="bi" width="24" height="24" role="img" aria-label="Categories">
                 <use xlink:href="#cats" />
@@ -137,7 +137,7 @@
 
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a href="{% url 'home' %}" class="nav-link py-3 " title="{{user.username}}"
+            <a href="{% url 'home' %}" class="nav-link py-3  {% if request.path == '/home/' %}active{% endif %}" title="{{user.username}}"
               data-bs-toggle="tooltip" data-bs-placement="right">
               <svg class="bi" width="24" height="24" role="img" aria-label="profile">
                 <use xlink:href="#people-circle" />

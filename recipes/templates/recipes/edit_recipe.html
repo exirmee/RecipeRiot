@@ -150,8 +150,7 @@
                 placeholder="ingredient">
             </div>
             <div class=" col-3    ">
-              <input type="number" name="value" class="value p-3 w-100 dark-input   text-white"
-                placeholder="value">
+              <input type="number" name="value" class="value p-3 w-100 dark-input   text-white" placeholder="value">
             </div>
             <div class=" col-2   ">
               <select class="unit p-3 w-100 dark-input   text-white" aria-label="Select Unit" name="unit">
@@ -208,8 +207,7 @@
       <form hx-post="/save/{{ recipe.id }}/" hx-target="#msg" hx-fail-target="#msg" enctype="multipart/form-data">
         {% csrf_token %}
         <input class="d-none" id="imageB" type="file" name="image" />
-        <input class="d-none" name="privacy" id="privacyB" {% if recipe.privacy %}checked{% endif %}
-          value="{{recipe.privacy}}" />
+        <input class="d-none" name="privacy" id="privacyB" {% if recipe.privacy %}checked{% endif %} value="{{recipe.privacy}}" />
         <input class="d-none" name="name" id="nameB" value="{{recipe.name}}" />
         <input class="d-none" name="serves" id="servesB" value="{{recipe.serves}}" />
         <input class="d-none" name="difficulty" id="difficultyB" value="{{recipe.difficulty}}" />
@@ -217,11 +215,15 @@
         <textarea class="d-none" name="intro" id="introB">{{recipe.intro}}</textarea>
         <textarea class="d-none" name="outro" id="outroB">{{recipe.outro}}</textarea>
         <textarea class="d-none dark-input" name="cat" id="cat"></textarea>
+        <!-- Create a div element with class "alert" and one of the contextual classes -->
+        <div class="" id="msg" class="alert alert-info" role="alert">
+          <!-- Add your alert message -->
+        </div>
         <button type="submit" class="btn btn-primary btn-lg px-4 gap-3 w-100">Save</button>
-        <p id="msg"></p>
+
       </form>
     </div>
-   
+
   </div>
 </div>
 
@@ -405,5 +407,6 @@
     background-color: #0f0f0f;
     color: white;
   }
+
 </style>
 {%endblock%}
