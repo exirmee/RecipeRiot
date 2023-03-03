@@ -2,104 +2,122 @@
 {% load i18n %}
 {% block content %}
 {% load static %}
-<div class="container" style="overflow:auto;">
-    <div class="row home-head">
-        <div class="col-12">
-            <form method="post" action="{% url 'add_recipe' %}">
-                {% csrf_token %}
-                <h2 class=" dark-text">{% trans "Create New Recipe" %}</h2>
-                <input type="submit" class="btn btn-info" value="Add New Recipe">
-            </form>
+<div class="sub-content d-block container my-5" style="overflow:auto;">
+    <div class="d-block mt-3">
+        <div class=" home-head  mt-2 mb-3 p-5">
+            <h1>MY PROFILE HOME </h1>
+            <p class="lead ">Discover the best recipes for delicious and satisfying meals with the world’s most popular
+                recipe
+                app. You will find everything you need to prepare food that everyone loves, from easy instructions to
+                helpful
+                tips.</p>
+                <form method="post" action="{% url 'add_recipe' %}">
+                    {% csrf_token %}
+                    <h2>{% trans "Create New Recipe" %}</h2>
+                    <input type="submit" class="btn btn-info" value="Add New Recipe">
+                </form>
         </div>
-    </div>
-    <div class="row my-recipes pt-5">
-        <h1 class="text-center dark-text">My Recipes</h1>
-        {% for recipe in recipes %}
-        <div id="recipe-card" class="col recipe-card  col-sm-12 col-md-6 col-lg-4 .col-xl-3">
-            <section class="card dark-card  mt-2">
-                <div class="card-header"><strong>chef: <a href="#">@{{ recipe.author.username }}</a></strong>
-                    {% if recipe.status == False %}
-                    <span class="recipe-status float-right text-light alert"> DRAFT</span>
-                    {% elif recipe.status == True and recipe.privacy == False %}
-                    <span class="recipe-status float-right text-success"> PUBLISH</span>
-                    {% elif recipe.privacy == True and recipe.status == True %}
-                    <span class="recipe-status float-right text-danger"> PRIVATE</span>
-                    {% endif %}
-                </div>
-                <img class="card-img-top img-fluid " src="{{recipe.image.url}}" alt="{{ recipe.image.name }}"
-                    width="300" height="100" />
-                <div class="card-body d-flex flex-row justify-content-between">
-                    <div>
-                        <a href="{% url 'view_recipe' recipe.id %}">
-                            <h5 class="card-title">{{recipe.name}}</h5>
-                        </a>
-                        <p>{{recipe.intro}}</p>
-                    </div>
-                    <div class="options">
-                        {% if user == recipe.author%}
-                        <form action="{% url 'delete_recipe' recipe.id %}" method="post">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">
-                                Delete
-                            </button>
-                        </form>
 
-                        <form action="{% url 'edit_recipe' recipe.id %}" method="post">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-info">
-                                Edit
-                            </button>
-                        </form>
+        <div class="row my-recipes  mt-2 mb-5 px-5">
+            <h1 class="">My Recipes</h1>
+            <p class="lead ">Discover the best recipes for delicious and satisfying meals with the world’s most popular
+                recipe
+                app. You will find everything you need to prepare food that everyone loves, from easy instructions to
+                helpful
+                tips.</p>
+            {% for recipe in recipes %}
+            <div id="recipe-card" class="col recipe-card  col-sm-12 col-md-6 col-lg-4 .col-xl-3">
+                <section class="card dark-card  mt-2">
+                    <div class="card-header"><strong>chef: <a href="#">@{{ recipe.author.username }}</a></strong>
+                        {% if recipe.status == False %}
+                        <span class="recipe-status text-right text-light alert"> DRAFT</span>
+                        {% elif recipe.status == True and recipe.privacy == False %}
+                        <span class="recipe-status text-right text-success"> PUBLISHED</span>
+                        {% elif recipe.privacy == True and recipe.status == True %}
+                        <span class="recipe-status text-right text-danger"> PRIVATE</span>
                         {% endif %}
                     </div>
-                </div>
+                    <img class="card-img-top img-fluid " src="{{recipe.image.url}}" alt="{{ recipe.image.name }}"
+                        width="300" height="100" />
+                    <div class="card-body d-flex flex-row justify-content-between">
+                        <div>
+                            <a href="{% url 'view_recipe' recipe.id %}">
+                                <h5 class="card-title">{{recipe.name}}</h5>
+                            </a>
+                            <p>{{recipe.intro}}</p>
+                        </div>
+                        <div class="options">
+                            {% if user == recipe.author%}
+                            <form action="{% url 'delete_recipe' recipe.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    Delete
+                                </button>
+                            </form>
 
-                <div class="card-footer text-muted">{{recipe.date}}</div>
-            </section>
-        </div>
-        {% empty %}
-        <p>No recipes yet :(</p>
-        {% endfor %}
-    </div>
-    <div class="row fav-recipes pt-5">
-        <h1 class="text-center dark-text">My Favorites</h1>
-        {% for recipe in favorite_recipes %}
-
-        <div id="recipe-card" class="col recipe-card  col-sm-12 col-md-6 col-lg-4 .col-xl-3">
-            <section class="card dark-card  mt-2">
-                <div class="card-header"><strong>chef: <a href="#">@{{ recipe.author.username }}</a></strong>
-                </div>
-                <img class="card-img-top img-fluid " src="{{recipe.image.url}}" alt="{{ recipe.image.name }}"
-                    width="300" height="100" />
-                <div class="card-body d-flex flex-row justify-content-between">
-                    <div>
-                        <a href="{% url 'view_recipe' recipe.id %}">
-                            <h5 class="card-title">{{recipe.name}}</h5>
-                        </a>
-                        <p>{{recipe.intro}}</p>
+                            <form action="{% url 'edit_recipe' recipe.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-info">
+                                    Edit
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-                <div class="card-footer text-muted">
 
-                    <form data-hx-post="{% url 'add_favorite' recipe.id %}" hx-target="#add-favorite-btn{{recipe.id}}">
-                        {% csrf_token %}
-                        {% if user.is_authenticated %}
-                        <button type="submit" id="add-favorite-btn{{recipe.id}}" class="btn btn-primary">
-                            {% if recipe.id in favorites %}♥{% else %}♡{% endif %}
-                        </button>
-
-                    </form>
-                    {% endif %}
-
-
-                    {{recipe.date}}
-                </div>
-            </section>
+                    <div class="card-footer text-muted">{{recipe.date}}</div>
+                </section>
+            </div>
+            {% empty %}
+            <p>No recipes yet :(</p>
+            {% endfor %}
         </div>
+        <div class="row fav-recipes  mt-2 mb-5 px-5">
+            <h1 class="">My Favorites</h1>
+            <p class="lead ">Discover the best recipes for delicious and satisfying meals with the world’s most popular
+                recipe
+                app. You will find everything you need to prepare food that everyone loves, from easy instructions to
+                helpful
+                tips.</p>
+            {% for recipe in favorite_recipes %}
 
-        {% empty %}
-        <p>No Favorites yet :(</p>
-        {% endfor %}
+            <div id="recipe-card" class="col recipe-card  col-sm-12 col-md-6 col-lg-4 .col-xl-3">
+                <section class="card dark-card  mt-2">
+                    <div class="card-header"><strong>chef: <a href="#">@{{ recipe.author.username }}</a></strong>
+                    </div>
+                    <img class="card-img-top img-fluid " src="{{recipe.image.url}}" alt="{{ recipe.image.name }}"
+                        width="300" height="100" />
+                    <div class="card-body d-flex flex-row justify-content-between">
+                        <div>
+                            <a href="{% url 'view_recipe' recipe.id %}">
+                                <h5 class="card-title">{{recipe.name}}</h5>
+                            </a>
+                            <p>{{recipe.intro}}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+
+                        <form data-hx-post="{% url 'add_favorite' recipe.id %}"
+                            hx-target="#add-favorite-btn{{recipe.id}}">
+                            {% csrf_token %}
+                            {% if user.is_authenticated %}
+                            <button type="submit" id="add-favorite-btn{{recipe.id}}" class="btn btn-primary">
+                                {% if recipe.id in favorites %}♥{% else %}♡{% endif %}
+                            </button>
+
+                        </form>
+                        {% endif %}
+
+
+                        {{recipe.date}}
+                    </div>
+                </section>
+            </div>
+
+            {% empty %}
+            <p>No Favorites yet :(</p>
+            {% endfor %}
+        </div>
     </div>
 </div>
 

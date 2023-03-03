@@ -369,8 +369,7 @@ def add_review(request, pk):
         image = request.FILES['image']
     else:
         image=None
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",user,review,recipe,rating)
     review_obj=RecipeReview.objects.create(recipe=recipe, user=user,rating=rating,review=review,image=image)
     review_obj.save()
 
-    return HttpResponse(user)
+    return render(request,'recipes/partials/review.html',{'review_obj':review_obj})

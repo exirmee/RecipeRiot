@@ -3,38 +3,50 @@
 {% block content %}
 {% load static %}
 
-
 <div class="sub-content d-block container my-5" style="overflow:auto;">
     <div class="d-block mt-3">
-        {% include 'search_form.html' %}
+        <div class="search-form mt-2 mb-3 p-5">
+            <h1>RECIPE CATEGORIES </h1>
+            <p class="lead ">Discover the best recipes for delicious and satisfying meals with the world’s most popular
+                recipe
+                app. You will find everything you need to prepare food that everyone loves, from easy instructions to
+                helpful
+                tips.</p>
+            {% include 'search_form.html' %}
+        </div>
         <div class="row ">
             {% for parent in parent_category %}
-            <div class="parent my-2 px-5">
+            <div class="parent row mt-2 mb-5 px-5">
                 <h3>
                     {{ parent.name }}
                 </h3>
                 {% for child in categories %}
                 {% if child.parent_categories == parent %}
-                <a href=" {{ child.pk }}" class="btn btn-outline-primary btn-sm cat_item">
-                    {{ child }}
-                </a>
+                <div class="cat_item card dark-card col-3">
+                    <a href=" {{ child.pk }}" class="cat_item">
+                        <img class="card-img-top img-fluid" src="{{child.image.url}}">
+
+                        <img>
+                        <div class="card-body text-light">
+                            <h4 class="card-title"> {{ child }}</h4>
+
+                        </div>
+                    </a>
+                </div>
                 {% endif %}
                 {% endfor %}
             </div>
             {% endfor %}
 
         </div>
-<style>
+        <style>
+            .cat_item {
 
-
-
-.cat_item{
-
-    padding: 10px;
-    font-weight: 600;
-    font-size: x-large;
-}
-</style>
+                padding: 10px;
+                font-weight: 600;
+                font-size: x-large;
+            }
+        </style>
 
     </div>
 </div>

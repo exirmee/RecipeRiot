@@ -49,7 +49,16 @@
     {% endif %}
   </div>
 </div>
-<div class="sub-content d-block container my-5 px-5">
+<div class="sub-content d-block container my-5 ">
+  <div class="search-form mt-2 mb-3 p-5">
+    <h1>RECIPE CATEGORIES </h1>
+    <p class="lead ">Discover the best recipes for delicious and satisfying meals with the world’s most popular
+      recipe
+      app. You will find everything you need to prepare food that everyone loves, from easy instructions to
+      helpful
+      tips.</p>
+    {% include 'search_form.html' %}
+  </div>
   <div class="row pt-5">
     {% for recipe in recipe_list|dictsort:"name" %}
     <div class="col recipe-card col-sm-12 col-md-6 col-lg-4 .col-xl-3">
@@ -69,14 +78,14 @@
           <a href="{% url 'view_recipe' recipe.id %}"><button class="btn btn-primary light-text">lets cook
               it!</button></a>
           <form data-hx-post="{% url 'add_favorite' recipe.id %}" hx-target="#add-favorite-btn{{recipe.id}}"
-            style="float: right;" >
+            style="float: right;">
             {% csrf_token %}
             <button type="submit" id="add-favorite-btn{{recipe.id}}" class="btn btn-outline-secondary">
               {% if recipe.id in favorites %}♥{% else %}♡{% endif %}
             </button>
 
           </form>
-         
+
         </div>
       </section>
     </div>
@@ -102,6 +111,5 @@
       </ul>
     </nav>
   </div>
-
 </div>
 {% endblock %}

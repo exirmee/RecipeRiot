@@ -28,7 +28,7 @@ class Units(models.Model):
 class RecipeCats(models.Model):
     name = models.CharField(max_length=255)
     desc=models.TextField(null=True)
-    image = ResizedImageField(size=[850, 310], quality=80,force_format='WebP',crop=['middle', 'center'], upload_to='recipe_images/',default="/recipe_images/default.jpg",blank=True, null=True)
+    image = ResizedImageField(size=[430, 290], quality=80,force_format='WebP',crop=['middle', 'center'], upload_to='cats_images/',default="/cats/default.jpg",blank=True, null=True)
     parent_categories = models.ForeignKey(ParentCats,on_delete=models.CASCADE)
     def __str__(self):
         return self.name
