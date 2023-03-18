@@ -117,8 +117,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
@@ -150,3 +148,6 @@ LOGOUT_REDIRECT_URL = '/login'
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 31536000
+
+CSRF_TRUSTED_ORIGINS = ['https://web-production-71eb.up.railway.app/']
+
