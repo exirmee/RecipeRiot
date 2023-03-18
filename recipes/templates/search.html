@@ -6,9 +6,7 @@
   <div class="d-block mt-3">
     <div class="search-form mt-2 mb-3 p-5"">
       <h1>
-        We have found 
-        {{ recipe_count }}
-        Recipes
+     SEARCH FORM
       </h1>
       <p class="lead ">Discover the best recipes for delicious and satisfying meals with the world’s most popular recipe
         app. You will find everything you need to prepare food that everyone loves, from easy instructions to helpful
@@ -19,8 +17,8 @@
 
     <div class="row recipe-content py-5 mt-2 mb-5 px-5">
       {% for recipe in recipes|dictsort:"name" %}
-      <div class="col recipe-card col-sm-12 col-md-6 col-lg-4 ">
-        <section class="card dark-card">
+      <div class=" recipe-card col-sm-12 col-md-6 col-lg-4 ">
+        <section class="card dark-card" >
           <img class="card-img-top img-fluid " src="{{recipe.image.url}}" alt="{{ recipe.image.name }}" width="300"
             height="100" />
           <div class="card-body">

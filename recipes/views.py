@@ -11,6 +11,7 @@ from .forms import RegisterForm, LoginForm,RecipeForm
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from PIL import Image
+from django.db.models import Avg
 
 #this function runs every time a Recipe creat or edit and make a resized copy of recipe image 
 @login_required
@@ -44,7 +45,15 @@ def resize_image(sender, instance, **kwargs):
 def index(request): 
     """View function for recipe index page ."""
     recipe_count = Recipe.objects.filter(privacy=False,status=True).count()
-    recipe_list = Recipe.objects.filter(privacy=False,status=True)
+    recipe_list = Recipe.objects.filter(privacy=False,status=True).order_by('date')
+    # Get the average rating for each recipe
+    average_ratings = RecipeReview.objects.values('recipe').annotate(average_rating=Avg('rating'))
+    
+    # Create a dictionary to map recipe IDs to their average ratings
+    ratings_dict = {rating['recipe']: rating['average_rating'] for rating in average_ratings}
+    # Add the average rating to each recipe object
+    for recipe in recipe_list:
+        recipe.average_rating = ratings_dict.get(recipe.id, 0)
     if not request.user.is_authenticated:
         favorites = ()
     else:
@@ -53,8 +62,9 @@ def index(request):
     page = request.GET.get('page')
     recipe_list = paginator.get_page(page)
     # Render the HTML template index.html with the data in the context variable
-    template=loader.get_template('recipes/recipe_list.html')
+    template=loader.get_template('recipes/index.html')
     contex={
+
         'recipe_count':recipe_count,
         'recipe_list':recipe_list,
         'favorites':favorites,
@@ -191,8 +201,16 @@ def view_recipe(request,pk):
         ingredients=recipe.ingredients.all()
         instructions=recipe.instructions.all()
         categories = recipe.cat.all()
-        reviews=RecipeReview.objects.filter(recipe=recipe)
-        context = {'recipe': recipe,'categories': categories,'instructions':instructions,'ingredients':ingredients,'reviews':reviews}
+        reviews=RecipeReview.objects.filter(recipe=recipe,status='approved')
+        average_rating = RecipeReview.objects.filter(recipe=recipe).aggregate(Avg('rating'))['rating__avg']
+        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',average_rating)
+        context = {'recipe': recipe,
+                   'categories': categories,
+                   'instructions':instructions,
+                   'ingredients':ingredients,
+                   'reviews':reviews,
+                   'average_rating':average_rating
+                   }
         return render(request, 'recipes/view_recipe.html', context)
 
 
@@ -371,5 +389,5 @@ def add_review(request, pk):
         image=None
     review_obj=RecipeReview.objects.create(recipe=recipe, user=user,rating=rating,review=review,image=image)
     review_obj.save()
-
-    return render(request,'recipes/partials/review.html',{'review_obj':review_obj})
+    print(render(request,'recipes/partials/review.html',{'review_obj':review_obj}))
+    return HttpResponse('thanks! your review is submited and will be published after approvment.')

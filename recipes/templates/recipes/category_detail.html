@@ -3,39 +3,43 @@
 {% block content %}
 {% load static %}
 
-
-
-
-
-<div class="container" style="overflow:auto;">
-  <div class="d-block">
-    {% include 'search_form.html' %}
-
-    {% for cats in related_categories %}
-
-    <h1>current cat /{{cats.name}}</h1>
-    <div class="row pt-5">
-      {% for recipe in recipe_list %}
-      {% if cats in recipe.cat.all %}
-      <div class="col recipe-card col-sm-12 col-md-6 col-lg-4 .col-xl-3">
-        <section class="card dark card">
-          <div class="card-header"><strong>chef: @<a href="#">{{ recipe.author.username }}</a></strong></div>
-          <img class="card-img-top img-fluid " src="{{recipe.image.url}}" alt="{{ recipe.image.name }}" width="300"
-            height="100" />
-          <div class="card-body">
-            <h4 class="card-title">{{ recipe.name }}</h4>
-            <p class="card-text">
-            <div class="d-inline py-2 text-primary">Serves: {{ recipe.serves }}</div>
-            <div class="d-inline py-2 text-primary">Difficulty: {{ recipe.difficulty }}</div>
-            <div class="d-inline py-2 text-primary">Time: {{ recipe.timetoprepare }}</div>
-            <div class="intro py-3 ">{{ recipe.intro|slice:':150' }}...</div>
-            <a href="../../recipe/{{ recipe.pk }}" class="btn btn-primary">lets cook it!</a>
-          </div>
-        </section>
+<div class="sub-content d-block container my-5" style="overflow:auto;">
+  <div class="d-block  mt-3">
+    <div class="search-form mt-2 mb-3 p-5">
+      <h1>RECIPE CATEGORIES </h1>
+      <p class="lead ">Discover the best recipes for delicious and satisfying meals with the world’s most popular
+        recipe
+        app. You will find everything you need to prepare food that everyone loves, from easy instructions to
+        helpful
+        tips.</p>
+      {% include 'search_form.html' %}
+    </div>
+    <div class="parent  mt-2 mb-5 px-5">
+      {% for cats in related_categories %}
+      <h1>{{cats.name}}</h1>
+      <div class="row ">
+        {% for recipe in recipe_list %}
+        {% if cats in recipe.cat.all %}
+        <div class="col recipe-card col-sm-12 col-md-6 col-lg-4 .col-xl-3">
+          <section class="card dark card">
+            <div class="card-header"><strong>chef: @<a href="#">{{ recipe.author.username }}</a></strong></div>
+            <img class="card-img-top img-fluid " src="{{recipe.image.url}}" alt="{{ recipe.image.name }}" width="300"
+              height="100" />
+            <div class="card-body">
+              <h4 class="card-title">{{ recipe.name }}</h4>
+              <p class="card-text">
+              <div class="d-inline py-2 text-primary">Serves: {{ recipe.serves }}</div>
+              <div class="d-inline py-2 text-primary">Difficulty: {{ recipe.difficulty }}</div>
+              <div class="d-inline py-2 text-primary">Time: {{ recipe.timetoprepare }}</div>
+              <div class="intro py-3 ">{{ recipe.intro|slice:':150' }}...</div>
+              <a href="../../recipe/{{ recipe.pk }}" class="btn btn-primary">lets cook it!</a>
+            </div>
+          </section>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
       </div>
-      {% endif %}
-      {% endfor %}
-      {% endfor %}
     </div>
     <div class="row">
       <nav aria-label="Page navigation ">

@@ -22,7 +22,7 @@
                 </h3>
                 {% for child in categories %}
                 {% if child.parent_categories == parent %}
-                <div class="cat_item card dark-card col-3">
+                <div class="cat_item card dark-card col-lg-3 col-md-3 col-s-4 col-sm-12">
                     <a href=" {{ child.pk }}" class="cat_item">
                         <img class="card-img-top img-fluid" src="{{child.image.url}}">
 

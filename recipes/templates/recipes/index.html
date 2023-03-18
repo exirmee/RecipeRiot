@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="main-content d-block container my-5 p-5" style="overflow:auto;">
+  <div class="row my-2 ">
+    <div class="col-5 ">
+      <div class="logo ">
+        <img src="{% static '../media/logo.png' %}" class="" alt="logo">
+      </div>
+      <h1>
+        <small>We Have </small>
+        {{ recipe_count }}
+        <small> Recipes</small>
+      </h1>
+    </div>
+    <div class="col-7">
+      <img src="{% static '../media/food.png' %}" class="food-image img-fluid" alt="">
+    </div>
+  </div>
+  <div class="row">
+    {% if user.is_authenticated %}
+    <p>
+      <span> welcome <strong><a href="{% url 'home' %}">{{ user.username }}</a> </strong> </span>
+      We also have tips and tricks to help you cook like a pro, as well as videos and reviews from other users who have
+      tried our recipes. You can also share your own creations with us and join our community of food lovers.
+      So what are you waiting for? Start your culinary adventure today with Recipe World!
+    </p>
+    
+    <div class=" ">
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">Signout</button>
+      </form>
+    </div>
+    {% else %}
+    <div class="  ">
+      <p>
+        Whether you are looking for a quick breakfast, a hearty lunch, a delicious dinner, or a decadent dessert, you will
+        find it here. You can browse our categories, search by ingredients, or explore our collections of popular cuisines
+        and dishes.
+        We also have tips and tricks to help you cook like a pro, as well as videos and reviews from other users who have
+        tried our recipes. You can also share your own creations with us and join our community of food lovers.
+        So what are you waiting for? Start your culinary adventure today with Recipe World!
+      </p>
+
+      <form action="{% url 'signup' %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">Signup</button>
+      </form>
+      <form action="{% url 'login' %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-secondary btn-lg px-4">Login</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<div class="sub-content d-block container my-5 ">
+  <div class="search-form mt-2 mb-3 p-5">
+    <h1>RECIPE CATEGORIES </h1>
+    <p class="lead ">Discover the best recipes for delicious and satisfying meals with the world’s most popular
+      recipe
+      app. You will find everything you need to prepare food that everyone loves, from easy instructions to
+      helpful
+      tips.</p>
+    {% include 'search_form.html' %}
+  </div>
+  {% include 'recipes/partials/recipe_list.html' %}
+</div>
+{% endblock %}

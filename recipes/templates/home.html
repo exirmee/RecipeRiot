@@ -26,7 +26,7 @@
                 helpful
                 tips.</p>
             {% for recipe in recipes %}
-            <div id="recipe-card" class="col recipe-card  col-sm-12 col-md-6 col-lg-4 .col-xl-3">
+            <div id="recipe-card" class=" recipe-card  col-sm-12 col-md-6 col-lg-4 .col-xl-3">
                 <section class="card dark-card  mt-2">
                     <div class="card-header"><strong>chef: <a href="#">@{{ recipe.author.username }}</a></strong>
                         {% if recipe.status == False %}
@@ -74,14 +74,14 @@
         </div>
         <div class="row fav-recipes  mt-2 mb-5 px-5">
             <h1 class="">My Favorites</h1>
-            <p class="lead ">Discover the best recipes for delicious and satisfying meals with the world’s most popular
+            <p class="lead ">Discover  the best recipes for delicious and satisfying meals with the world’s most popular
                 recipe
                 app. You will find everything you need to prepare food that everyone loves, from easy instructions to
                 helpful
                 tips.</p>
             {% for recipe in favorite_recipes %}
 
-            <div id="recipe-card" class="col recipe-card  col-sm-12 col-md-6 col-lg-4 .col-xl-3">
+            <div id="recipe-card" class=" recipe-card col-sm-12 col-md-6 col-lg-4 ">
                 <section class="card dark-card  mt-2">
                     <div class="card-header"><strong>chef: <a href="#">@{{ recipe.author.username }}</a></strong>
                     </div>

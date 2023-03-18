@@ -3,23 +3,24 @@
 {% load static %}
 
 <div class="sub-content recipe-content d-block container my-5" style="overflow:auto;">
-  <div class="   mb-3 p-5">
+  <div class="mb-3 p-5">
 
     <!-- end of recipe options -->
     <div class="recipe-options my-2 ">
       <div class="row pb-0 align-items-center ">
         <div class="px-4  my-5 text-center">
           <img class="recipe-cover d-block mx-auto mb-4 img-fluid rounded-lg-3" src="{{recipe.image.url}}" alt="" />
-          <h1>
+          <h1 class="recipe-title">
             {{ recipe.name }}
           </h1>
-          <a>
+          <span class="recipe-rating" style="font-size: xx-large;" > {{ average_rating }}</span>
+          <div class="recipe-categories">
             {% for category in categories %}
             <a href="../../cats/{{ category.pk }}/" class="btn btn-outline-primary btn-sm ">
               <li>{{ category.name }}</li>
             </a>
             {% endfor %}
-          </a>
+          </div>
           <div class="col-lg-6 mx-auto">
             <p class="lead mb-4">{{ recipe.intro|safe }}</p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
@@ -34,7 +35,7 @@
               </form>
               {% endif %}
               <!-- load share trigger modal  and bootstrap ja fo that-->
-              {% include "recipes/share_recipe.html" %}
+              {% include 'recipes/partials/share_recipe.html' %}
               <script src="{% static 'script/bootstrap.min.js' %}"></script>
             </div>
           </div>
@@ -153,7 +154,7 @@
       <p>
         Did YOU COOK THIS RECIPE? ADD A NICE REVIEWS
       </p>
-      <form hx-post="/add_rev/{{ recipe.id }}/" hx-target="#review-row" hx-swap="beforeend" hx-fail-target="#msg" enctype="multipart/form-data">
+      <form hx-post="/add_rev/{{ recipe.id }}/" hx-target="#msg" hx-swap="beforeend">
         {% csrf_token %}
         <div class="rating ">
           <h4> Your Rating (required)</h4>
@@ -204,7 +205,7 @@
     {% endif %}
     <hr class="hr hr-blurry" />
 
-    <div class="view-reviews mt-5 " id="review-row"">
+    <div class="view-reviews mt-5 " id="review-row">
       <h1>
         REVIEWS
       </h1>
@@ -217,5 +218,31 @@
     </div>
   </div>
 </div>
-
-{%endblock%}
+<script>
+  // Select all div elements with the class "recipe-rating"
+  const ratings = document.querySelectorAll('.recipe-rating');
+  
+  // Loop through each rating element
+  ratings.forEach(rating => {
+    // Get the numerical value of the rating
+    let value = parseFloat(rating.textContent);
+  
+    // Round the value to the nearest 0.5
+    value = Math.round(value * 2) / 2;
+  
+    // Create a string of stars based on the rating value
+    let stars = '';
+    for (let i = 1; i <= Math.floor(value); i++) {
+      stars += '★';
+    }
+  
+    // Add a half star if necessary
+    if (value % 1 !== 0) {
+      stars += '☆';
+    }
+  
+    // Set the text content of the rating element to the string of stars
+    rating.textContent = stars;
+  });
+  </script>
+  {% endblock %}

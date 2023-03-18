@@ -1,11 +1,11 @@
 /* change bootstrap 5 colors*/
 
 :root {
-  --grad-back:linear-gradient(200deg, rgba(32,31,47,1) 0%, rgba(58,63,82,1) 67%, rgba(32,31,47,1) 100%);
+  --grad-back: linear-gradient(200deg, rgba(32, 31, 47, 1) 0%, rgba(58, 63, 82, 1) 67%, rgba(32, 31, 47, 1) 100%);
   --dark-back: #201f2f;
   --light-back: #ece3ce;
-  --dark-card: #303443;
-  --dark-input:#201f2f;
+  --dark-card: rgba(32, 31, 47,0.05);
+  --dark-input: #201f2f;
   --light-text: #ece3ce;
   --dark-text: #201f2f;
   --recipe-color: #fbd77d;
@@ -19,9 +19,11 @@ main,
   margin: 0;
   padding: 0;
 }
-.dark-text{
+
+.dark-text {
   color: var(--dark-text);
 }
+
 body {
 
   font-weight: 400;
@@ -33,107 +35,137 @@ body {
   box-sizing: border-box;
   position: relative;
   height: 50px;
-  background-color: var(--light-back)!important;
-  color: var(--light-text)!important;
+  background-color: var(--light-back) !important;
+  color: var(--light-text) !important;
 }
+
 .main-content {
-  max-width: 950px!important;
-  background: var(--grad-back)!important;
+  max-width: 950px !important;
+  background: var(--grad-back) !important;
   border-radius: 40px;
 }
 
 .sub-content {
-  max-width:950px!important;
-  background: var(--grad-back)!important;
+  max-width: 950px !important;
+  background: var(--grad-back) !important;
   border-radius: 15px;
 }
+
 /*set  sidebar item in center  */
-.sidebar-items{
+.sidebar-items {
   justify-content: space-around;
 }
+
 /*change animation smooth nav-item color by mouse hover */
-.nav-link:hover{
+.nav-item>a:hover  {
   background-color: var(--light-text);
   color: var(--dark-text);
-  fill:var(--dark-text)!important;
+  fill: var(--dark-text) !important;
   border-radius: 20px;
   transition: 0.3s;
 }
 
-.sidebar{
+.sidebar {
   display: flex;
   align-items: center;
 }
-.nav-link{
-  fill:var(--light-text)!important;
-  color:var(--recipe-color)!important;
+
+.nav-link {
+  fill: var(--light-text) !important;
+  color: var(--recipe-color) !important;
 
 }
-.nav-link.active{ 
-  fill:var(--dark-text)!important;
-}
-.btn{
-  border-radius: 10px!important;
-}
-.btn-primary,.nav-link.active
-{
-  color: var(--dark-text)!important;
-  background-color:var(--recipe-color)!important;
-  border-color: var(--dark-text)!important;
-}
-.btn-outline-primary,.btn-sm {
-  background-color:var(--recipe-color)!important;
-}
-.btn-secondry{
 
-  background-color: var(--recipe-color-2)!important;
-}
-a{
-  color:var(--recipe-color)!important;
-}
-a:hover{
-  color:var(--recipe-green)!important;
+.nav-link.active {
+  fill: var(--dark-text) !important;
 }
 
-.btn-primary:hover,.btn-outline-primary:hover{
-  background-color:var(--recipe-green)!important;
-  color: var(--dark-text)!important;
+.btn {
+  border-radius: 10px !important;
 }
+
+.btn-primary,
+.nav-link.active {
+  color: var(--dark-text) !important;
+  background-color: var(--recipe-color) !important;
+  border-color: var(--dark-text) !important;
+}
+
+.btn-outline-primary,
+.btn-sm {
+  background-color: var(--recipe-color) !important;
+}
+
+.btn-secondry {
+
+  background-color: var(--recipe-color-2) !important;
+}
+
+a {
+  color: var(--recipe-color) !important;
+}
+
+a:hover {
+  color: var(--recipe-green) !important;
+}
+
+.btn-primary:hover,
+.btn-outline-primary:hover {
+  background-color: var(--recipe-green) !important;
+  color: var(--dark-text) !important;
+}
+
 /* change bootstrap 5  colors*/
 
 .btn-outline-primary {
-  color:  var(--dark-text)!important;
-  border-color: var(--recipe-color-2)!important;
+  color: var(--dark-text) !important;
+  border-color: var(--recipe-color-2) !important;
 }
 
-.btn-outline-secondary  {
-  color: var(--light-text)!important;
+.btn-outline-secondary {
+  color: var(--light-text) !important;
 }
 
 
-.page-link{
-  color:var(--recipe-color)!important;
-}
-.page-item.active .page-link{
-  background-color:var(--recipe-color)!important;
-  border-color:var(--recipe-color)!important;
+.page-link {
+  color: var(--recipe-color) !important;
 }
 
-.dark-input,.form-control{
-  background-color: var(--dark-input)!important;
+.page-item.active .page-link {
+  background-color: var(--recipe-color) !important;
+  border-color: var(--recipe-color) !important;
+}
+
+.dark-input,
+.form-control {
+  background-color: var(--dark-input) !important;
   border: var(--recipe-color) !important;
   border: 1px solid var(--recipe-color) !important;
   padding: 0.01em 16px !important;
   border-radius: 16px !important;
   color: var(--light-text) !important;
-  }
+}
+.card {
+  transition: all 0.3s ease-in-out;
+}
+.dark {
+  background-color: var(--dark-back) !important;
+}
 
-  .dark-card{
-    background-color: var(--dark-card)!important;
-  }
-
-
-
+.dark-card {
+  background-color: var(--dark-card) !important;
+  border-radius: 10px!important;
+  border-color: rgba(255, 255, 255, 0.03)!important;
+color: rgba(255, 255, 255,0.5);
+}
+.card-title {
+  color: var(--light-text)
+}
+.classWithShadow {
+  -moz-box-shadow: 3px 3px 4px #0cbb38;
+  -webkit-box-shadow: 3px 3px 4px #10a87b;
+  box-shadow: 3px 3px 4px #0e7937;
+}
 .content-body {
   line-height: 22px;
   font-size: 13px;
@@ -164,7 +196,8 @@ a:hover{
 }
 
 .nav-item {
-  place-self: center;}
+  place-self: center;
+}
 
 .recipe-card {
   padding-right: 10px;
@@ -178,26 +211,37 @@ a:hover{
   width: 100px;
   position: fixed;
   z-index: 1;
-  background: var(--dark-card);
+  background: var(--dark-back);
   top: 0;
   left: 0;
   overflow-x: hidden;
   padding-top: 20px;
 }
+
 .content-body {
   margin-left: 100px;
   /* Same as the width of the sidenav */
 }
 
-@media (max-width: 450px) {
+
+/* change style on mobile devices*/
+@media (max-width: 500px) {
   .sidebar {
- display: none!important;
+    display: none !important;
   }
+
   .content-body {
-    margin-left: 0!important;
+    margin-left: 0 !important;
+  }
 }
+@media screen and (min-width: 500px) {
+  .menu-buttom  {
+    display: none !important;
+    margin-top: 0!important;
+    margin-bottom: 0!important;
+  }
 }
-  
+/* change style on mobile devices*/
 
 
 @media (min-width: 992px) {
@@ -206,45 +250,48 @@ a:hover{
   }
 }
 
-.search{
+.search {
   position: relative;
   box-shadow: 0 0 40px rgba(51, 51, 51, .1);
-  }
-  .search input{
-   height: 60px;
-   text-indent: 25px;
-   border: 2px solid #d6d4d4;
-  }
+}
 
-  .search input:focus{
-   box-shadow: none;
-   border: 2px solid #8bc34a;
-  }
+.search input {
+  height: 60px;
+  text-indent: 25px;
+  border: 2px solid #d6d4d4;
+}
 
-  .search .fa-search{
+.search input:focus {
+  box-shadow: none;
+  border: 2px solid #8bc34a;
+}
 
-   position: absolute;
-   top: 20px;
-   left: 16px;
+.search .fa-search {
 
-  }
+  position: absolute;
+  top: 20px;
+  left: 16px;
 
-  .search button{
-   position: absolute;
-   top: 5px;
-   right: 5px;
-   height: 50px;
-   width: 110px;
-   background: #8bc34a;
+}
 
-  }
- .table{
-    background-color: var(--dark-card)!important;
-    color: var(--light-text)!important;
- }
+.search button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 50px;
+  width: 110px;
+  background: #8bc34a;
 
- .page-item.disabled .page-link, .page-item * {
-  color: var(--light-text)!important;
-  background-color: var(--dark-card)!important;
-  border-color: var(--light-text)!important;
+}
+
+.table {
+  background-color: var(--dark-card) !important;
+  color: var(--light-text) !important;
+}
+
+.page-item.disabled .page-link,
+.page-item * {
+  color: var(--light-text) !important;
+  background-color: var(--dark-card) !important;
+  border-color: var(--light-text) !important;
 }
