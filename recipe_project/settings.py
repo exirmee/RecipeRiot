@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['web-production-71eb.up.railway.app','127.0.0.1','marmor.ir']
 ALLOWED_HOST = ['web-production-71eb.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://*.web-production-71eb.up.railway.app','https://*.127.0.0.1','https://*marmor.ir','http://*hatmore.ir']
+
 
 
 # Application definition
@@ -155,6 +157,4 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 31536000
 
-
-CSRF_TRUSTED_ORIGINS = ['https://*.web-production-71eb.up.railway.app','https://*.127.0.0.1','https://*marmor.ir','http://*hatmore.ir']
 
