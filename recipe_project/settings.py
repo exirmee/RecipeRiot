@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-02ghfm+tri9ok&fke4204*acj*rhqr*4idk_j@o404zet2d^n%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['web-production-71eb.up.railway.app','127.0.0.1']
+ALLOWED_HOSTS = ['web-production-71eb.up.railway.app','127.0.0.1','marmor.ir']
 ALLOWED_HOST = ['web-production-71eb.up.railway.app']
 
 
@@ -125,8 +125,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles'), ]
+print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>STATIC_URL>',STATIC_URL)
+print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>STATIC_ROOT>',STATIC_ROOT)
+print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>STATICFILES_DIRS>',STATICFILES_DIRS)
+
 
 # Media Files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
