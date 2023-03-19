@@ -156,4 +156,5 @@ CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 31536000
 
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-71eb.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://*.web-production-71eb.up.railway.app','https://*.127.0.0.1','https://*marmor.ir','http://*hatmore.ir']
+
