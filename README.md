@@ -66,5 +66,3 @@ For any queries or feedback, feel free to reach out:
 Name: Morteza Hatami 
 Email: m.hatami@live.com
 ```
-
-Please ensure that the screenshot image files (sc1.jpg, sc2.jpg, sc3.jpg, sc4.jpg) are located in the same directory as your README.md file.
